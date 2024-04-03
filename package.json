@@ -1,0 +1,21 @@
+{
+  "name": "taboola",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "http-server -p 8080",
+    "serve-html": "cd html-test && http-server -p 8081",
+    "serve-all": "concurrently \"npm run serve\" \"npm run serve-html\"",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "http-server": "^14.1.1"
+  }
+}

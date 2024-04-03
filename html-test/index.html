@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Taboola Test</title>
+    <script src="//localhost:8080/index.js"></script>
+</head>
+<body>
+    <div class="widget-container"></div>
+    <div class="widget-container"></div>
+
+    <script>
+        setTimeout(() => {
+            const el = document.createElement("div");
+            el.className = "widget-container";
+            document.body.appendChild(el);
+        }, 2000)
+    </script>
+</body>
+</html>
