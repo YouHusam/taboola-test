@@ -17,7 +17,7 @@
 
   // Listen to dynamically added DOM content eg React components...
   // Create a new observer instance
-  let observer = new MutationObserver((mutations) => {
+  const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       console.log('DOM content updated');
       document._taboola.addWidgets();
@@ -25,7 +25,7 @@
   });
 
   // Configuration of the observer
-  let config = { attributes: false, childList: true, subtree: true };
+  const config = { attributes: false, childList: true, subtree: true };
 
   observer.observe(document.body, config);
 
