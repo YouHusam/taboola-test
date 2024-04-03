@@ -1,0 +1,13 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Set the indentation style to 2 spaces
+[*]
+indent_style = space
+indent_size = 2
+
+# Ensure there is one line at the end of each file
+[*]
+insert_final_newline = true
