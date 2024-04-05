@@ -7,18 +7,21 @@
     "serve": "http-server -p 8080",
     "serve-html": "cd html-test && http-server -p 8081",
     "serve-all": "concurrently \"npm run serve\" \"npm run serve-html\"",
-    "test": "jest"
+    "test": "jest",
+    "minify-js": "for file in $(find src -name \"*.js\" ! -name \"*.test.js\"); do npx terser \"$file\" -m -c -o \"dist/${file#src/}\"; done",
+    "minify-css": "for file in $(find src -name \"*.css\"); do npx cleancss \"$file\" -o \"dist/${file#src/}\"; done",
+    "build": "concurrently \"npm run minify-js\" \"npm run minify-css\""
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "jest": "^29.7.0"
-  },
   "devDependencies": {
+    "clean-css-cli": "^5.6.3",
     "concurrently": "^8.2.2",
     "http-server": "^14.1.1",
+    "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "jsdom": "^24.0.0"
+    "jsdom": "^24.0.0",
+    "terser": "^5.30.3"
   },
   "jest": {
     "globalTeardown": "./jest.teardown.js",

@@ -7,13 +7,13 @@
 
   <script type="text/javascript">
     const script = document.createElement('script');
-    script.src = '//localhost:8080/src/index.js';
+    script.src = '//localhost:8080/dist/index.js';
     script.onload = function () {
       window.taboola.init({
         apiKey: 'f9040ab1b9c802857aa783c469d0e0ff7e7366e4',
         publisherId: 'taboola-templates',
         appType: 'desktop',
-        cdnUrl: '//localhost:8080/src'
+        cdnUrl: '//localhost:8080/dist'
       });
     };
     document.head.appendChild(script);
