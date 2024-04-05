@@ -1,10 +1,10 @@
-.taboola-widget-container {
+.taboola-widget-container--loaded {
   font-family: sans-serif;
   position: relative;
   width: 100%;
 }
 
-.taboola-widget-container .widget-title {
+.taboola-widget-container--loaded .taboola-widget-title {
   font-size: 14px;
   font-weight: bold;
   padding: 0 0 10px;
@@ -13,8 +13,54 @@
   text-transform: uppercase;
 }
 
-.taboola-widget-container .widget-title .widget-title__badge {
+.taboola-widget-container--loaded .taboola-widget-title .taboola-widget-title-badge {
   font-weight: normal;
   font-size: 10px;
   text-transform: capitalize;
+}
+
+.taboola-widget-container--loaded.taboola-widget-sponsor .taboola-widget-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.taboola-widget-container--loaded.taboola-widget-sponsor .taboola-widget-content .taboola-widget-item {
+  flex-basis: 320px;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+.taboola-widget-container--loaded.taboola-widget-sponsor .taboola-widget-content .taboola-widget-item .taboola-item-link {
+  text-decoration: none;
+  color: #000;
+  display: flex;
+}
+
+.taboola-widget-container--loaded.taboola-widget-sponsor .taboola-widget-content .taboola-widget-item .taboola-item-thumbnail {
+  width: 120px;
+  height: 120px;
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #e5e5e5;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.taboola-widget-container--loaded.taboola-widget-sponsor .taboola-widget-content .taboola-widget-item .taboola-item-text {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+
+.taboola-widget-container--loaded.taboola-widget-sponsor .taboola-widget-content .taboola-widget-item .taboola-item-branding {
+  font-size: 12px;
+  color: #999;
+  margin-top: auto;
 }

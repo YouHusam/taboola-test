@@ -1,11 +1,11 @@
 (function () {
-  const TABOOLA_API = "https://api.taboola.com/1.0/json";
+  const TABOOLA_API = 'https://api.taboola.com/1.0/json';
 
   const SCRIPTS_TO_APPEND = [
-    { src: "src/widget-wrapper.js" }
+    { src: 'src/widget-wrapper.js' }
   ];
   const STYLESHEETS_TO_APPEND = [
-    { src: "src/widget.css" }
+    { src: 'src/widget.css' }
   ]
 
   /**
@@ -25,14 +25,14 @@
      * @param urlOptions.count {Number} - Number of recommendations to fetch
      */
     return function (urlOptions) {
-      const sourceType = urlOptions.sourceType || "video";
-      const sourceId = urlOptions.sourceId || "";
-      const sourceUrl = urlOptions.sourceUrl || "";
+      const sourceType = urlOptions.sourceType || 'video';
+      const sourceId = urlOptions.sourceId || '';
+      const sourceUrl = urlOptions.sourceUrl || '';
       const count = urlOptions.count || 4;
-      return TABOOLA_API + "/" + publisherId + "/recommendations.get" +
-        "?app.type=" + appType + "&app.apikey=" + apiKey +
-        "&source.type=" + sourceType + "&source.id=" + sourceId + "&source.url=" + sourceUrl
-        + "&count=" + count;
+      return TABOOLA_API + '/' + publisherId + '/recommendations.get' +
+        '?app.type=' + appType + '&app.apikey=' + apiKey +
+        '&source.type=' + sourceType + '&source.id=' + sourceId + '&source.url=' + sourceUrl
+        + '&count=' + count;
     }
   };
 
@@ -45,18 +45,18 @@
    */
   function init(options) {
     if (!(options.publisherId && options.appType && options.apiKey)) {
-      throw new Error("Taboola API requires publisherId, appType and apiKey");
+      throw new Error('Taboola API requires publisherId, appType and apiKey');
     }
 
     SCRIPTS_TO_APPEND.forEach(function (script) {
-      const scriptElement = document.createElement("script");
-      scriptElement.setAttribute("src", "//localhost:8080/" + script.src);
+      const scriptElement = document.createElement('script');
+      scriptElement.setAttribute('src', '//localhost:8080/' + script.src);
       document.body.appendChild(scriptElement);
     });
     STYLESHEETS_TO_APPEND.forEach(function (stylesheet) {
-      const linkElement = document.createElement("link");
-      linkElement.setAttribute("rel", "stylesheet");
-      linkElement.setAttribute("href", "//localhost:8080/" + stylesheet.src);
+      const linkElement = document.createElement('link');
+      linkElement.setAttribute('rel', 'stylesheet');
+      linkElement.setAttribute('href', '//localhost:8080/' + stylesheet.src);
       document.head.appendChild(linkElement);
     });
     window.taboola.getApiUrl = createApiUrl(options.publisherId, options.appType, options.apiKey);
@@ -70,7 +70,7 @@
   window.taboola = {
     init: init,
     getApiUrl: function () {
-      throw new Error("Taboola API not initialized");
+      throw new Error('Taboola API not initialized');
     }
   };
 })();

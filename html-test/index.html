@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
   <title>Taboola Test</title>
+  <!-- responsive meta tag -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <script type="text/javascript">
     const script = document.createElement('script');
-    script.src = "//localhost:8080/src/index.js";
+    script.src = '//localhost:8080/src/index.js';
     script.onload = function() {
       window.taboola.init({
-        apiKey: "f9040ab1b9c802857aa783c469d0e0ff7e7366e4",
-        publisherId: "taboola-templates",
-        appType: "desktop"
+        apiKey: 'f9040ab1b9c802857aa783c469d0e0ff7e7366e4',
+        publisherId: 'taboola-templates',
+        appType: 'desktop'
       });
     };
     document.head.appendChild(script);
@@ -17,13 +20,17 @@
 </head>
 
 <body>
-  <div class="taboola-widget-container"></div>
-  <div class="taboola-widget-container"></div>
+  <div class="taboola-widget-container" data-recommendations-type="sponsor" data-source-type="video" data-source-id="214321562187" data-source-url="http://www.site.com/videos/214321562187.html"></div>
+  <div class="taboola-widget-container" data-recommendations-type="organic" data-source-type="video" data-source-id="214321562187" data-source-url="http://www.site.com/videos/214321562187.html"></div>
 
   <script>
     setTimeout(function () {
-      const el = document.createElement("div");
-      el.className = "taboola-widget-container";
+      const el = document.createElement('div');
+      el.className = 'taboola-widget-container';
+      el.setAttribute('data-recommendations-type', 'sponsor');
+      el.setAttribute('data-source-type', 'video');
+      el.setAttribute('data-source-id', '214321562187');
+      el.setAttribute('data-source-url', 'http://www.site.com/videos/214321562187.html');
       document.body.appendChild(el);
     }, 2000)
   </script>
