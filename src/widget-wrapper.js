@@ -1,13 +1,14 @@
 (function () {
   const WIDGET_CONTAINER_CLASS = 'taboola-widget-container';
+  const LOADED_WIDGET_CLASS_NAME = WIDGET_CONTAINER_CLASS + "--loaded";
 
   const recommendationsTypeMap = {
     organic: {
       title: 'More For You',
       hasBadge: false,
       className: "taboola-widget-organic",
-      getItemHtml: function (item) {
-        return ""
+      getItemHtml: function (_item) {
+        return "Organic not handled"
       },
     },
     sponsor: {
@@ -30,21 +31,28 @@
     }
   }
 
+  function getItemsFromUrl(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200)
+        callback(JSON.parse(xhr.responseText));
+    };
+    xhr.send();
+  }
+
   /**
    * Get widget HTML
    * @param recommendationsType {'organic' | 'sponsor'} - Recommendations type
-   * @param sourceType {String} - Source type
-   * @param sourceId {String} - Source ID
-   * @param sourceUrl {String} - Source URL
-   * @param count {Number} - Number of recommendations to fetch
+   * @param items {Array} - Recommendations items
    * @returns {string}
    */
-  function getWidgetHtml(recommendationsType, sourceType, sourceId, sourceUrl, count) {
+  function getWidgetHtml(recommendationsType, items) {
     const widgetTitle = recommendationsTypeMap[recommendationsType].title +
       (recommendationsTypeMap[recommendationsType].hasBadge ? ' <span class="taboola-widget-title-badge">By Taboola</span>' : '');
     let widgetContent = '';
 
-    response.list.forEach(function (item) {
+    items.forEach(function (item) {
       widgetContent += '<div class="taboola-widget-item">' + recommendationsTypeMap[recommendationsType].getItemHtml(item) + '</div>';
     });
 
@@ -60,20 +68,37 @@
    * Add widgets to the page
    */
   function addWidgets() {
+    // Find all elements with Taboola widget class
     const widgetContainers = document.getElementsByClassName(WIDGET_CONTAINER_CLASS);
+
+    // Using this instead of Array.from() to support older browsers
     Array.prototype.forEach.call(widgetContainers, function (container) {
-      const loadedClassName = WIDGET_CONTAINER_CLASS + "--loaded";
-      if (container.className.includes(loadedClassName)) {
+      if (container.className.includes(LOADED_WIDGET_CLASS_NAME)) {
         return;
       }
+
+      // Get attributes from html
       const recommendationsType = container.getAttribute('data-recommendations-type') || 'sponsor';
       const sourceType = container.getAttribute('data-source-type') || 'video';
       const sourceId = container.getAttribute('data-source-id') || '';
       const sourceUrl = container.getAttribute('data-source-url') || '';
       const count = container.getAttribute('data-count') || 4;
-      container.innerHTML = getWidgetHtml(recommendationsType, sourceType, sourceId, sourceUrl, count);
+
+      // Get API URL
+      const apiUrl = window.taboola.getApiUrl({
+        sourceType: sourceType,
+        sourceId: sourceId,
+        sourceUrl: sourceUrl,
+        count: count
+      });
+
+      // Get items form url and populate DOM
+      getItemsFromUrl(apiUrl, function (items) {
+        container.innerHTML = getWidgetHtml(recommendationsType, items.list);
+      });
+
       // Remove the original class to optimize performance
-      container.className = loadedClassName + ' ' + recommendationsTypeMap[recommendationsType].className;
+      container.className = LOADED_WIDGET_CLASS_NAME + ' ' + recommendationsTypeMap[recommendationsType].className;
     });
   }
 
