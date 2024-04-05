@@ -1,0 +1,20 @@
+.taboola-widget-container {
+  font-family: sans-serif;
+  position: relative;
+  width: 100%;
+}
+
+.taboola-widget-container .widget-title {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 0 10px;
+  margin: 0 0 10px;
+  border-bottom: 1px solid #e5e5e5;
+  text-transform: uppercase;
+}
+
+.taboola-widget-container .widget-title .widget-title__badge {
+  font-weight: normal;
+  font-size: 10px;
+  text-transform: capitalize;
+}
