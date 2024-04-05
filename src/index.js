@@ -2,10 +2,10 @@
   const TABOOLA_API = 'https://api.taboola.com/1.0/json';
 
   const SCRIPTS_TO_APPEND = [
-    { src: 'src/widget.js' }
+    { src: 'widget.js' }
   ];
   const STYLESHEETS_TO_APPEND = [
-    { src: 'src/widget.css' }
+    { src: 'widget.css' }
   ]
 
   /**
@@ -42,21 +42,24 @@
    * @param options.publisherId {String} - Taboola publisher ID
    * @param options.appType {String} - Taboola app type
    * @param options.apiKey {String} - Taboola API key
+   * @param options.cdnUrl {String} - Where the scripts are hosted
    */
   function init(options) {
     if (!(options.publisherId && options.appType && options.apiKey)) {
       throw new Error('Taboola API requires publisherId, appType and apiKey');
     }
 
+    const cdnUrl = options.cdnUrl;
+
     SCRIPTS_TO_APPEND.forEach(function (script) {
       const scriptElement = document.createElement('script');
-      scriptElement.setAttribute('src', '//localhost:8080/' + script.src);
+      scriptElement.setAttribute('src', cdnUrl + '/' + script.src);
       document.body.appendChild(scriptElement);
     });
     STYLESHEETS_TO_APPEND.forEach(function (stylesheet) {
       const linkElement = document.createElement('link');
       linkElement.setAttribute('rel', 'stylesheet');
-      linkElement.setAttribute('href', '//localhost:8080/' + stylesheet.src);
+      linkElement.setAttribute('href', cdnUrl + '/' + stylesheet.src);
       document.head.appendChild(linkElement);
     });
     window.taboola.getApiUrl = createApiUrl(options.publisherId, options.appType, options.apiKey);
