@@ -47,7 +47,7 @@ Where `recommendation-type` is the type of recommendations you want to display (
 etc...).
 
 And `source-type`, `source-id`, and `source-url` are the type, ID, and URL of the source of the recommendations (e.g. "
-article", "video", etc).
+article", "video", etc.).
 
 Please note that for now only "sponsor" recommendations are supported.
 
