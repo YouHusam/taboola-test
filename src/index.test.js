@@ -1,15 +1,16 @@
-const { JSDOM } = require('jsdom');
-const dom = new JSDOM();
-global.document = dom.window.document;
-global.window = dom.window;
-
-
 describe('Taboola API', () => {
-  beforeEach(() => {
-    require('./index.js');
+  beforeEach((done) => {
+    const script = document.createElement('script');
+    script.src = 'src/index.js';
+    document.head.appendChild(script);
+    script.onload = function () {
+      done(); // Indicate that the script has loaded and the tests can begin
+    };
   });
 
   afterEach(() => {
+    // Make sure mutations are not being observed
+    window.dispatchEvent(new Event('beforeunload'));
     document.getElementsByTagName('html')[0].innerHTML = '';
   });
 
@@ -21,7 +22,8 @@ describe('Taboola API', () => {
     const options = {
       publisherId: 'testPublisher',
       appType: 'testApp',
-      apiKey: 'testKey'
+      apiKey: 'testKey',
+      cdnUrl: '//localhost:8089/src'
     };
     expect(() => window.taboola.init(options)).not.toThrow();
   });
@@ -39,7 +41,8 @@ describe('Taboola API', () => {
     const options = {
       publisherId: 'testPublisher',
       appType: 'testApp',
-      apiKey: 'testKey'
+      apiKey: 'testKey',
+      cdnUrl: '//localhost:8089/src'
     };
     window.taboola.init(options);
     const urlOptions = {
@@ -59,15 +62,15 @@ describe('Taboola API', () => {
       publisherId: 'testPublisher',
       appType: 'testApp',
       apiKey: 'testKey',
-      cdnUrl: '.'
+      cdnUrl: '//localhost:8089/src'
     };
     window.taboola.init(options);
     scripts = document.querySelectorAll('script');
     expect(scripts.length).toBe(oldScriptsLength + 1);
-    expect(scripts[scripts.length - 1].src).toBe('./widget.js');
+    expect(scripts[scripts.length - 1].src).toBe('http://localhost:8089/src/widget.js');
 
     const stylesheets = document.querySelectorAll('link');
     expect(stylesheets.length).toBe(1);
-    expect(stylesheets[0].href).toBe('./widget.css');
+    expect(stylesheets[0].href).toBe('http://localhost:8089/src/widget.css');
   });
 });

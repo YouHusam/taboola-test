@@ -108,15 +108,23 @@
     Array.prototype.forEach.call(widgetContainers, addWidgetToElement);
   }
 
-  // Listen to dynamically added DOM content e.g. React components...
-  const observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function () {
-      addWidgets();
+  function setupAll() {
+    // Listen to dynamically added DOM content e.g. React components...
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function () {
+        addWidgets();
+      });
     });
-  });
 
-  observer.observe(document.body, { attributes: false, childList: true, subtree: true });
+    observer.observe(document.body, { attributes: false, childList: true, subtree: true });
 
-  // Expose the function to the global scope
-  addWidgets();
+    // remove observer when document is unloaded
+    window.addEventListener('beforeunload', function () {
+      observer.disconnect();
+    });
+
+    addWidgets();
+  }
+
+  setupAll();
 })();

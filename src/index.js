@@ -45,7 +45,7 @@
    * @param options.cdnUrl {String} - Where the scripts are hosted
    */
   function init(options) {
-    if (!(options.publisherId && options.appType && options.apiKey)) {
+    if (!(options.publisherId && options.appType && options.apiKey && options.cdnUrl)) {
       throw new Error('Taboola API requires publisherId, appType and apiKey');
     }
 

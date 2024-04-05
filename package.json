@@ -17,6 +17,20 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "http-server": "^14.1.1",
+    "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^24.0.0"
+  },
+  "jest": {
+    "globalTeardown": "./jest.teardown.js",
+    "globalSetup": "./jest.global-setup.js",
+    "testEnvironment": "jsdom",
+    "roots": [
+      "src"
+    ],
+    "testEnvironmentOptions": {
+      "resources": "usable",
+      "runScripts": "dangerously",
+      "url": "http://localhost:8089"
+    }
   }
 }
