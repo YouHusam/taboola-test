@@ -65,6 +65,39 @@
   }
 
   /**
+   * Add widget logic to an html element
+   * @param element {HTMLElement} - HTML element
+   */
+  function addWidgetToElement(element) {
+    if (element.className.includes(LOADED_WIDGET_CLASS_NAME)) {
+      return;
+    }
+
+    // Get attributes from html
+    const recommendationsType = element.getAttribute('data-recommendations-type') || 'sponsor';
+    const sourceType = element.getAttribute('data-source-type') || 'video';
+    const sourceId = element.getAttribute('data-source-id') || '';
+    const sourceUrl = element.getAttribute('data-source-url') || '';
+    const count = element.getAttribute('data-count') || 4;
+
+    // Get API URL
+    const apiUrl = window.taboola.getApiUrl({
+      sourceType: sourceType,
+      sourceId: sourceId,
+      sourceUrl: sourceUrl,
+      count: count
+    });
+
+    // Get items form url and populate DOM
+    getItemsFromUrl(apiUrl, function (items) {
+      element.innerHTML = getWidgetHtml(recommendationsType, items.list);
+    });
+
+    // Remove the original class to optimize performance
+    element.className = LOADED_WIDGET_CLASS_NAME + ' ' + recommendationsTypeMap[recommendationsType].className;
+  }
+
+  /**
    * Add widgets to the page
    */
   function addWidgets() {
@@ -72,34 +105,7 @@
     const widgetContainers = document.getElementsByClassName(WIDGET_CONTAINER_CLASS);
 
     // Using this instead of Array.from() to support older browsers
-    Array.prototype.forEach.call(widgetContainers, function (container) {
-      if (container.className.includes(LOADED_WIDGET_CLASS_NAME)) {
-        return;
-      }
-
-      // Get attributes from html
-      const recommendationsType = container.getAttribute('data-recommendations-type') || 'sponsor';
-      const sourceType = container.getAttribute('data-source-type') || 'video';
-      const sourceId = container.getAttribute('data-source-id') || '';
-      const sourceUrl = container.getAttribute('data-source-url') || '';
-      const count = container.getAttribute('data-count') || 4;
-
-      // Get API URL
-      const apiUrl = window.taboola.getApiUrl({
-        sourceType: sourceType,
-        sourceId: sourceId,
-        sourceUrl: sourceUrl,
-        count: count
-      });
-
-      // Get items form url and populate DOM
-      getItemsFromUrl(apiUrl, function (items) {
-        container.innerHTML = getWidgetHtml(recommendationsType, items.list);
-      });
-
-      // Remove the original class to optimize performance
-      container.className = LOADED_WIDGET_CLASS_NAME + ' ' + recommendationsTypeMap[recommendationsType].className;
-    });
+    Array.prototype.forEach.call(widgetContainers, addWidgetToElement);
   }
 
   // Listen to dynamically added DOM content e.g. React components...

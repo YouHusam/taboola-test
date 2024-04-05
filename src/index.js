@@ -2,7 +2,7 @@
   const TABOOLA_API = 'https://api.taboola.com/1.0/json';
 
   const SCRIPTS_TO_APPEND = [
-    { src: 'src/widget-wrapper.js' }
+    { src: 'src/widget.js' }
   ];
   const STYLESHEETS_TO_APPEND = [
     { src: 'src/widget.css' }
