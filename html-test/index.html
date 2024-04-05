@@ -2,7 +2,18 @@
 <html lang="en">
 <head>
   <title>Taboola Test</title>
-  <script src="//localhost:8080/src/index.js"></script>
+  <script type="text/javascript">
+    const script = document.createElement('script');
+    script.src = "//localhost:8080/src/index.js";
+    script.onload = function() {
+      window.taboola.init({
+        apiKey: "f9040ab1b9c802857aa783c469d0e0ff7e7366e4",
+        publisherId: "taboola-templates",
+        appType: "desktop"
+      });
+    };
+    document.head.appendChild(script);
+  </script>
 </head>
 
 <body>
@@ -10,7 +21,7 @@
   <div class="taboola-widget-container"></div>
 
   <script>
-    setTimeout(() => {
+    setTimeout(function () {
       const el = document.createElement("div");
       el.className = "taboola-widget-container";
       document.body.appendChild(el);
